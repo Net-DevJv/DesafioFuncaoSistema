@@ -1,0 +1,16 @@
+# Pastas de build
+bin/
+obj/
+
+# Configurações locais do Visual Studio
+.vs/
+
+# Visual Studio Code
+.vscode/
+
+# Arquivos de usuário/configurações
+*.user
+*.suo
+
+# Logs
+*.log
