@@ -1,4 +1,4 @@
-﻿CREATE OR ALTER PROCEDURE FI_SP_IncBeneficiario
+﻿CREATE PROCEDURE FI_SP_IncBeneficiario
     @NOME          VARCHAR (50) ,   
     @CPF           VARCHAR(11)  ,
     @IDCLIENTE	   BIGINT

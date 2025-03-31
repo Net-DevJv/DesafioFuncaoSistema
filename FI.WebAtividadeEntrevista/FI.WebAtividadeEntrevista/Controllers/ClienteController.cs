@@ -38,40 +38,44 @@ namespace WebAtividadeEntrevista.Controllers
                 Response.StatusCode = 400;
                 return Json(string.Join(Environment.NewLine, erros));
             }
-            else
+
+            if (model.Beneficiarios == null || !model.Beneficiarios.Any())
             {
-                if (boCliente.VerificarExistencia(model.CPF))
-                {
-                    Response.StatusCode = 400;
-                    return Json("CPF já cadastrado");
-                }
-
-                model.Id = boCliente.Incluir(new Cliente()
-                {
-                    CEP = model.CEP,
-                    Cidade = model.Cidade,
-                    Email = model.Email,
-                    Estado = model.Estado,
-                    Logradouro = model.Logradouro,
-                    Nacionalidade = model.Nacionalidade,
-                    Nome = model.Nome,
-                    Sobrenome = model.Sobrenome,
-                    CPF = model.CPF,
-                    Telefone = model.Telefone
-                });
-
-                foreach (var beneficiario in model.Beneficiarios)
-                {
-                    boBeneficiario.Incluir(new Beneficiario()
-                    {
-                        CPF = beneficiario.CPF,
-                        IdCliente = model.Id,
-                        Nome = beneficiario.Nome
-                    });
-                }
-
-                return Json("Cadastro efetuado com sucesso");
+                Response.StatusCode = 400;
+                return Json("É necessário incluir pelo menos um beneficiário para salvar o cliente.");
             }
+
+            if (boCliente.VerificarExistencia(model.CPF))
+            {
+                Response.StatusCode = 400;
+                return Json("CPF já cadastrado");
+            }
+
+            model.Id = boCliente.Incluir(new Cliente()
+            {
+                CEP = model.CEP,
+                Cidade = model.Cidade,
+                Email = model.Email,
+                Estado = model.Estado,
+                Logradouro = model.Logradouro,
+                Nacionalidade = model.Nacionalidade,
+                Nome = model.Nome,
+                Sobrenome = model.Sobrenome,
+                CPF = model.CPF,
+                Telefone = model.Telefone
+            });
+
+            foreach (var beneficiario in model.Beneficiarios)
+            {
+                boBeneficiario.Incluir(new Beneficiario()
+                {
+                    CPF = beneficiario.CPF,
+                    IdCliente = model.Id,
+                    Nome = beneficiario.Nome
+                });
+            }
+
+            return Json("Cadastro efetuado com sucesso");
         }
 
         [HttpPost]
