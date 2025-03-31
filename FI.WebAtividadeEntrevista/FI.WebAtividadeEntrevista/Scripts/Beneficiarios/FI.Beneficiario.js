@@ -3,11 +3,10 @@
 
     var cpf = $("#CPFBeneficiario");
     cpf.mask('000.000.000-00');
-    alert("Passei no js do beneficiario 1");
 
     $('#formIncluirBeneficiario').submit(function (e) {
         e.preventDefault();
-        alert("Passei no js do beneficiario 2 ");
+
         var nomeBeneficiario = $('#NomeBeneficiario').val();
         var cpfBeneficiario = $('#CPFBeneficiario').val();
 
