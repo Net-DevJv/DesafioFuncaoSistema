@@ -1,0 +1,57 @@
+﻿@model FI.WebAtividadeEntrevista.Models.ListaBeneficiariosModel
+
+<div class="modal fade" id="beneficiariosModal" tabindex="-1" role="dialog" aria-labelledby="beneficiariosModalLabel" aria-hidden="true">
+    <div class="modal-dialog pl-0 pr-0" role="document">
+        <div class="modal-content">
+            <div class="modal-header row" style="margin: 0 !important;">
+                <h4 class="col-md-10 modal-title" id="beneficiariosModalLabel">Beneficiários</h4>
+                <button type="button" class="col-md-2 close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formIncluirBeneficiario" method="post">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="CPFBeneficiario">CPF:</label>
+                                <input required="required" type="text" class="form-control" id="CPFBeneficiario" name="CPFBeneficiario" placeholder="Ex.: 111.111.111-11" minlength="14" maxlength="14">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="NomeBeneficiario">Nome:</label>
+                                <input required="required" type="text" class="form-control" id="NomeBeneficiario" name="NomeBeneficiario" placeholder="Ex.: João" maxlength="50">
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="padding-top: 24px">
+                            <button form="formIncluirBeneficiario" type="submit" class="btn btn-success">Incluir</button>
+                        </div>
+                    </div>
+                </form>
+                <table class="table" id="beneficiariosTabela">
+                    <thead>
+                        <tr>
+                            <th scope="col">CPF</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var beneficiario in Model.Beneficiarios)
+                        {
+                            <tr scope="row" beneficiarioId="@beneficiario.Id">
+                                <td>@beneficiario.CPF</td>
+                                <td>@beneficiario.Nome</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" onclick="editarBeneficiario(this)">Alterar</button>
+                                    <button type="button" class="btn btn-primary" onclick="removerBeneficiario(this)">Excluir</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

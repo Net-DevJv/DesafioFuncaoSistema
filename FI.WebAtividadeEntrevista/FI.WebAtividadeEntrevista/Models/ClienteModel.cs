@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FI.WebAtividadeEntrevista.Models;
+using FI.WebAtividadeEntrevista.Validators;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -63,14 +65,21 @@ namespace WebAtividadeEntrevista.Models
         public string Sobrenome { get; set; }
 
         /// <summary>
+        /// CPF
+        /// </summary>
+        [Required]
+        [StringLength(11)]
+        [CPF]
+        public string CPF { get; set; }
+
+        /// <summary>
         /// Telefone
         /// </summary>
         public string Telefone { get; set; }
 
         /// <summary>
-        /// CPF
+        /// Lista de beneficiários do cliente
         /// </summary>
-        [Required]
-        public string CPF { get; set; }
+        public List<BeneficiarioModel> Beneficiarios { get; set; }
     }    
 }

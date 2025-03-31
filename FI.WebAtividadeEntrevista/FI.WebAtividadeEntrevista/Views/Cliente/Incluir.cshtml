@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 @{
     ViewBag.Title = "Cadastrar Cliente";
 }
@@ -6,7 +6,9 @@
     <script>
         var urlPost = '@Url.Action("Incluir", "Cliente", new { area = "" })';
     </script>
-    @Scripts.Render("~/bundles/clientes")
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+    @Scripts.Render("~/bundles/clientes", "~/bundles/Beneficiario")
 }
 <h2>@Html.Raw(ViewBag.Title)</h2>
 @Html.Partial("Forms")
+@{Html.RenderAction("BeneficiarioList", "Beneficiario");}

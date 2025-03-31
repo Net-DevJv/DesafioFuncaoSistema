@@ -9,58 +9,11 @@ namespace FI.AtividadeEntrevista.BLL
     public class BoCliente
     {
         /// <summary>
-        /// Valida o CPF informado.
-        /// </summary>
-        /// <param name="cpf">CPF a ser validado.</param>
-        /// <returns><c>true</c> se for válido; caso contrário, <c>false</c>.</returns>
-        private bool ValidarCPF(string cpf)
-        {
-            if (string.IsNullOrWhiteSpace(cpf))
-                return false;
-
-            cpf = new string(cpf.Where(char.IsDigit).ToArray());
-
-            if (cpf.Length != 11)
-                return false;
-
-            if (cpf.All(c => c == cpf[0]))
-                return false;
-
-            int soma = 0;
-            for (int i = 0; i < 9; i++)
-            {
-                soma += (cpf[i] - '0') * (10 - i);
-            }
-            int resto = soma % 11;
-            int primeiroDigito = resto < 2 ? 0 : 11 - resto;
-            if (primeiroDigito != (cpf[9] - '0'))
-                return false;
-
-            soma = 0;
-            for (int i = 0; i < 10; i++)
-            {
-                soma += (cpf[i] - '0') * (11 - i);
-            }
-            resto = soma % 11;
-            int segundoDigito = resto < 2 ? 0 : 11 - resto;
-            if (segundoDigito != (cpf[10] - '0'))
-                return false;
-
-            return true;
-        }
-
-        /// <summary>
         /// Inclui um novo cliente
         /// </summary>
         /// <param name="cliente">Objeto de cliente</param>
         public long Incluir(DML.Cliente cliente)
         {
-            if (!ValidarCPF(cliente.CPF))
-                throw new Exception("CPF inválido.");
-
-            if (VerificarExistencia(cliente.CPF))
-                throw new Exception("CPF já cadastrado!");
-
             DAL.DaoCliente cli = new DAL.DaoCliente();
             return cli.Incluir(cliente);
         }
@@ -71,12 +24,6 @@ namespace FI.AtividadeEntrevista.BLL
         /// <param name="cliente">Objeto de cliente</param>
         public void Alterar(DML.Cliente cliente)
         {
-            if (!ValidarCPF(cliente.CPF))
-                throw new Exception("CPF inválido.");
-
-            if (VerificarExistencia(cliente.CPF))
-                throw new Exception("CPF já cadastrado!");
-
             DAL.DaoCliente cli = new DAL.DaoCliente();
             cli.Alterar(cliente);
         }

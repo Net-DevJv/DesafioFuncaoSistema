@@ -1,8 +1,7 @@
 ﻿
 $(document).ready(function () {
-
-    // Máscaras de entrada
-    $('#CPF').mask('000.000.000-00');
+    var cpf = $("#CPF");
+    cpf.mask('000.000.000-00');
 
     $('#formCadastro').submit(function (e) {
         e.preventDefault();
@@ -14,27 +13,28 @@ $(document).ready(function () {
                 "CEP": $(this).find("#CEP").val(),
                 "Email": $(this).find("#Email").val(),
                 "Sobrenome": $(this).find("#Sobrenome").val(),
+                "CPF": $(this).find("#CPF").val().replace(/[-.]/g, ''),
                 "Nacionalidade": $(this).find("#Nacionalidade").val(),
                 "Estado": $(this).find("#Estado").val(),
                 "Cidade": $(this).find("#Cidade").val(),
                 "Logradouro": $(this).find("#Logradouro").val(),
                 "Telefone": $(this).find("#Telefone").val(),
-                "CPF": $(this).find("#CPF").val()
+                "Beneficiarios": obterBeneficiarios()
             },
             error:
-            function (r) {
-                if (r.status == 400)
-                    ModalDialog("Ocorreu um erro", r.responseJSON);
-                else if (r.status == 500)
-                    ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
-            },
+                function (r) {
+                    if (r.status == 400)
+                        ModalDialog("Ocorreu um erro", r.responseJSON);
+                    else if (r.status == 500)
+                        ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
+                },
             success:
-            function (r) {
-                ModalDialog("Sucesso!", r)
-                $("#formCadastro")[0].reset();
-            }
+                function (r) {
+                    ModalDialog("Sucesso!", r)
+                    $("#formCadastro")[0].reset();
+                }
         });
-    })   
+    })
 })
 
 function ModalDialog(titulo, texto) {
@@ -59,4 +59,20 @@ function ModalDialog(titulo, texto) {
 
     $('body').append(texto);
     $('#' + random).modal('show');
+}
+
+function obterBeneficiarios() {
+    const beneficiarios = [];
+
+    $('#beneficiariosTabela tbody tr').each(function () {
+        const cpf = $(this).find('td:nth-child(1)').text().replace(/[-.]/g, '');
+        const nome = $(this).find('td:nth-child(2)').text();
+
+        beneficiarios.push({
+            nome: nome,
+            cpf: cpf
+        });
+    });
+
+    return beneficiarios;
 }
